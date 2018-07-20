@@ -1,0 +1,13 @@
+mydb.json
+*.rdb
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# System Files
+.DS_Store
+Thumbs.db

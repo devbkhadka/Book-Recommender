@@ -1,0 +1,43 @@
+<mat-sidenav-container>
+  <mat-sidenav  #sidenav role="navigation" mode="push">
+   <mat-nav-list (click)="sidenav.toggle()">
+    <a mat-list-item>
+      <mat-icon class="icon">input</mat-icon>
+      <span class="label">Login</span>
+    </a>
+    <a mat-list-item 
+        routerLink="/">
+      <mat-icon class="icon">home</mat-icon>  
+        <span class="label">Home</span>
+    </a>
+    <a mat-list-item
+      routerLink="/dashboard">
+      <mat-icon class="icon">dashboard</mat-icon>  
+      <span class="label">Dashboard</span>
+    </a>
+    <a  mat-list-item 
+        type="button">
+      <mat-icon class="icon">input</mat-icon>
+      <span class="label">LogOut</span>
+    </a>  
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+     <div >
+       <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+     <div>
+       <a routerLink="/">
+          Book Recommender
+       </a>
+     </div>
+     
+    </mat-toolbar>
+    <main >
+        <router-outlet></router-outlet>  
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

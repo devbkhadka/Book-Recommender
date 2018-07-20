@@ -1,0 +1,41 @@
+<div>
+  <br>
+    <div class="container">
+        <div class="container">
+          <div fxLayout="column" fxLayoutGap="20px" fxLayout.gt-md="row"  fxLayoutAlign="space-around center" class="content">
+              <div class="blocks" >
+                  <button button="submit" mat-raised-button color="primary">
+                      <mat-icon>add</mat-icon> Add Post
+                  </button>
+              </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+      <div fxLayout="row" fxLayoutAlign="center center" class="content">
+        <mat-card class="card" >
+          <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+            <h3>Recent Posts</h3>
+          </mat-card-title>
+          <mat-card-content>
+              <div class="example-container mat-elevation-z8">
+                  <mat-grid-list cols="3" rowHeight="2:1">
+                    
+                    <mat-grid-tile *ngFor="let item of items | async">
+                      <mat-card fxFlex="1 1 auto">
+                        <mat-card-title >{{item.title}}</mat-card-title>
+                        <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                        <mat-card-content>{{item.body}}</mat-card-content>
+                      </mat-card>
+                    </mat-grid-tile>
+                    
+                  </mat-grid-list>
+                </div> 
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+

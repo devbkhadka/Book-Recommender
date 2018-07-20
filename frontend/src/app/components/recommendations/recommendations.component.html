@@ -1,0 +1,46 @@
+
+<!-- <ul>
+	<li *ngFor="let book of books | async" >
+		<h3>{{book.title}}</h3>
+		<h4>{{book.author}}</h4>
+		<img [src]="book.imageURLM">
+	</li>
+
+</ul> -->
+<h2>
+  Books Rated By User: {{user}}
+</h2>
+<mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
+                    
+<mat-grid-tile *ngFor="let book of booksRecommended | async">
+  <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
+    <mat-card-title >{{book.title}}</mat-card-title>
+    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+    <mat-card-content>
+    	<img [src]="book.imageURLM">
+    </mat-card-content>
+  </mat-card>
+</mat-grid-tile>
+
+
+</mat-grid-list>
+<br/>
+
+
+<h2>
+  Recommended Book For User: {{user}}
+</h2>
+<mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
+                    
+<mat-grid-tile *ngFor="let book of booksRated | async">
+  <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
+    <mat-card-title >{{book.title}}</mat-card-title>
+    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+    <mat-card-content>
+    	<img [src]="book.imageURLM">
+    </mat-card-content>
+  </mat-card>
+</mat-grid-tile>
+
+
+</mat-grid-list>
