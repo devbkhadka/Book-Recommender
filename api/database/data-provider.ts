@@ -24,7 +24,7 @@ interface DatabaseItem {
 
 interface DatabaseCollection extends DatabaseItem {
 	getAttrs():Observable<ItemAttribute>;
-	getAttrValue(name:string):Promise<string>;
+	getAttrValue(name:string):Promise<number>;
 	addToCollection(item:string, score:string):Promise<{}>;
 	removeFromCollection(item:string):Promise<0|1>;
 }
@@ -191,7 +191,7 @@ abstract class SortedSet implements DatabaseCollection, RecommendationItem{
 
 	abstract readonly id:string;
 
-	abstract getSimilarAttrsWithScore(name:string): Observable<ItemAttribute>;
+	abstract getAttrsOfSimilarItemWithScore(name:string): Observable<ItemAttribute>;
 
 	get dbKey():string{
 		return this.keyHelper.getDBKey(this.id);
@@ -205,8 +205,10 @@ abstract class SortedSet implements DatabaseCollection, RecommendationItem{
 		))
 	}
 
-	getAttrValue(name:string){
-		return redis.getOrderedSetMemberScore(this.dbKey, name);
+	getAttrValue(name:string):Promise<number>{
+		return redis.getOrderedSetMemberScore(this.dbKey, name).then(val=>{
+			return +val;
+		});
 	}
 
 	addToCollection(name:string, score:string){		
@@ -269,7 +271,7 @@ export class SimilarBooks extends SortedSet{
 		return this.ISBN;
 	}
 
-	getSimilarAttrsWithScore(name:string):Observable<ItemAttribute>{
+	getAttrsOfSimilarItemWithScore(name:string):Observable<ItemAttribute>{
 		throw "Method not implemented";
 		
 	}
@@ -311,7 +313,7 @@ export class BookRatings extends SortedSetWithSavedKeys{
 		return this.ISBN;
 	}
 
-	getSimilarAttrsWithScore(name:string):Observable<ItemAttribute>{
+	getAttrsOfSimilarItemWithScore(name:string):Observable<ItemAttribute>{
 		throw "Method not implemented";
 	}
 
@@ -363,7 +365,7 @@ export class UserRatings extends SortedSetWithSavedKeys{
 		return this.userId;
 	}
 
-	getSimilarAttrsWithScore(name:string):Observable<ItemAttribute>{
+	getAttrsOfSimilarItemWithScore(name:string):Observable<ItemAttribute>{
 		let similarBooks = new SimilarBooks(name);
 		return similarBooks.getAttrs();
 	}

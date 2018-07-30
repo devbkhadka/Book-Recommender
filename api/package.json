@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "parse": "node --require ts-node/register ./database/fill-database.ts",
-    "parse-d": "node --inspect-brk --require ts-node/register ./database/fill-database.ts",
-    "redis-test": "node --inspect-brk --require ts-node/register ./database/redis-test.ts",
+    "parse-books": "node --require ts-node/register ./database/books/precompute-similar-books.ts",
+    "parse-books-d": "node --inspect-brk --require ts-node/register ./database/books/precompute-similar-books.ts",
+    "parse-movies": "node --require ts-node/register ./database/movies/precompute-similar-movies.ts",
+    "parse-movies-d": "node --inspect-brk --require ts-node/register ./database/movies/precompute-similar-movies.ts",
+    "redis-test-d": "node --inspect-brk --require ts-node/register ./database/redis-test.ts",
+    "redis-test": "node --require ts-node/register ./database/redis-test.ts",
     "start": "nodemon --require ts-node/register ./server.ts",
     "start-d": "npx nodemon --inspect-brk --require ts-node/register ./server.ts"
   },
@@ -18,20 +21,22 @@
   "author": "Dev Khadka",
   "license": "ISC",
   "dependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.4",
     "@types/es6-promise": "^3.3.0",
+    "@types/express": "^4.16.0",
     "@types/ioredis": "^3.2.10",
+    "@types/node": "^10.5.1",
+    "@types/node-fetch": "^2.1.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "csv-parse": "^2.5.0",
     "express": "^4.16.3",
     "ioredis": "^3.2.2",
+    "node-fetch": "^2.2.0",
     "promise": "^8.0.1",
     "rxjs": "^6.2.1",
-    "stream-transform": "^1.0.2",
-    "@types/body-parser": "^1.17.0",
-    "@types/cors": "^2.8.4",
-    "@types/express": "^4.16.0",
-    "@types/node": "^10.5.1"
+    "stream-transform": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.1",

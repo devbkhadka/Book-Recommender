@@ -12,10 +12,11 @@
 </h2>
 <mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
                     
-<mat-grid-tile *ngFor="let book of booksRecommended | async">
+<mat-grid-tile *ngFor="let book of booksRated | async">
   <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
     <mat-card-title >{{book.title}}</mat-card-title>
     <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+    <span>Rating: {{book.score}}</span>
     <mat-card-content>
     	<img [src]="book.imageURLM">
     </mat-card-content>
@@ -32,10 +33,11 @@
 </h2>
 <mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
                     
-<mat-grid-tile *ngFor="let book of booksRated | async">
+<mat-grid-tile *ngFor="let book of booksRecommended | async">
   <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
     <mat-card-title >{{book.title}}</mat-card-title>
     <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+    <span>Prediction: {{book.score}}</span>
     <mat-card-content>
     	<img [src]="book.imageURLM">
     </mat-card-content>

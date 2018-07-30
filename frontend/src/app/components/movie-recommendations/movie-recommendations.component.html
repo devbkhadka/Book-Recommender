@@ -1,0 +1,48 @@
+
+<!-- <ul>
+	<li *ngFor="let movie of movies | async" >
+		<h3>{{movie.title}}</h3>
+		<h4>{{movie.author}}</h4>
+		<img [src]="movie.imageURLM">
+	</li>
+
+</ul> -->
+<h2>
+  Movies Rated By User: {{user}}
+</h2>
+<mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
+                    
+<mat-grid-tile *ngFor="let movie of moviesRated | async">
+  <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
+    <mat-card-title >{{movie.title}}</mat-card-title>
+    <mat-card-subtitle>{{movie.actors}}</mat-card-subtitle>
+    <span>Rating: {{movie.score}}</span>
+    <mat-card-content>
+    	<img [src]="movie.poster">
+    </mat-card-content>
+  </mat-card>
+</mat-grid-tile>
+
+
+</mat-grid-list>
+<br/>
+
+
+<h2>
+  Recommended Movies For User: {{user}}
+</h2>
+<mat-grid-list cols="3" rowHeight="4:3" gutterSize="20px">
+                    
+<mat-grid-tile *ngFor="let movie of moviesRecommended | async">
+  <mat-card fxFlex="1 1 auto" style="width:100%;height:100%">
+    <mat-card-title >{{movie.title}}</mat-card-title>
+    <mat-card-subtitle>{{movie.actors}}</mat-card-subtitle>
+    <span>Prediction: {{movie.score}}</span>
+    <mat-card-content>
+    	<img [src]="movie.poster">
+    </mat-card-content>
+  </mat-card>
+</mat-grid-tile>
+
+
+</mat-grid-list>

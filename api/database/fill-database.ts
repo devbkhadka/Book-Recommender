@@ -9,6 +9,17 @@ import { RecommendationItem, ItemAttribute } from '../recommend/recommendation-h
 import { simDistance } from '../recommend/similarity-calculator';
 
 
+/* ########## SUDO CODE OF WHAT THE FOLLOWING CODE WILL DO #################
+		loop for every book from all books with ratings
+			loop for every other book from all books with ratings
+			   get ratings of book
+			   get ratings of other book
+			   calculate similarity score between book and other book
+			   add the other book and score to similar books list of book
+			   add the book and score to similar books list of other book
+
+*/
+
 export async function fill(){
 	
 	const LIMIT = 1000;
@@ -85,22 +96,7 @@ export async function fill(){
 		console.log("recurssion complete");
 	})
 
-
-	// console.log(`${count} book ids listed`)
-
-
-
-
-	/*
-		for every book (scan ids)
-			for every other book (scan ids, skip n)
-			   get ratings of book
-			   get ratings of other book
-			   similarity score between book and other book
-			   add to similar books of book
-			   add to similar books of other book
-
-	*/
+	
 }
 
 fill();

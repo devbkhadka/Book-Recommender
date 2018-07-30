@@ -8,7 +8,6 @@ import { ApicallerService } from './services/apicaller.service';
 })
 export class AppComponent {
 	constructor() {
-	
 	}
 	title = 'app';
 	resp: [{name: String}];

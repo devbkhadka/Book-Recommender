@@ -1,7 +1,7 @@
 
 <mat-grid-list cols="5" rowHeight="5:1">
 	<mat-grid-tile *ngFor="let user of users | async">
-		<a [routerLink]="['/recommendations', user]">{{user}}</a>
+		<a [routerLink]="['/book/recommendations', user]">{{user}}</a>
 	</mat-grid-tile>
 </mat-grid-list>
 

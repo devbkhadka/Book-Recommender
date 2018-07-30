@@ -2,20 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
-import { RecommendationsComponent } from './components/recommendations/recommendations.component';
-import { UsersComponent } from './components/users/users.component'
-import { WelcomeComponent } from './components/welcome/welcome.component'
-import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { BookRecommendationsComponent } from './components/book-recommendations/book-recommendations.component';
+import { BookUsersComponent } from './components/book-users/book-users.component';
+import { MovieUsersComponent } from './components/movie-users/movie-users.component';
+import { MovieRecommendationsComponent } from './components/movie-recommendations/movie-recommendations.component';
 
 
 
 
 const routes: Routes = [
-	{ path: 'recommendations/:user', component: RecommendationsComponent },
-	{ path: '', component: UsersComponent },
-	{path: 'welcome', component: WelcomeComponent},
-  	{path: 'dashboard', component: DashboardComponent}
-]
+	{ path: 'book/recommendations/:user', component: BookRecommendationsComponent },
+	{ path: '', component: BookUsersComponent },
+	{ path: 'movie/recommendations/:user', component: MovieRecommendationsComponent },
+	{ path: 'movie/users', component: MovieUsersComponent },
+	{ path: 'book/users', component: BookUsersComponent }
+];
 
 @NgModule({
 	exports: [ RouterModule ],

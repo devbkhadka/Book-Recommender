@@ -12,8 +12,8 @@ interface Ratings{
 
 export interface RecommendationItem{
 	getAttrs(): Observable<ItemAttribute>;
-	getAttrValue(name:string): Promise<string>;
-	getSimilarAttrsWithScore(name:string): Observable<ItemAttribute>
+	getAttrValue(name:string): Promise<number>;
+	getAttrsOfSimilarItemWithScore(name:string): Observable<ItemAttribute>
 }
 
 /**
@@ -29,12 +29,12 @@ export function getRecommendationsFor(item:RecommendationItem):Observable<ItemAt
 
 	const waitFor = (async ()=>{
 
-		await item.getAttrs().forEach((attr:ItemAttribute)=>{
+		await item.getAttrs().pipe(take(200)).forEach((attr:ItemAttribute)=>{
 			currentItemRating[attr.name] = attr.value;
 		});
 
 		for(let key of Object.keys(currentItemRating)){
-			await item.getSimilarAttrsWithScore(key).pipe(take(50), 
+			await item.getAttrsOfSimilarItemWithScore(key).pipe(take(50), 
 			filter((similarItem:ItemAttribute)=>{
 				return !currentItemRating[similarItem.name];
 			})). 

@@ -23,8 +23,10 @@
     "import-spacing": true,
     "indent": [
       true,
-      "tabs"
+      "tabs",
+      4
     ],
+    "ter-indent": [true, "tab"],
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [

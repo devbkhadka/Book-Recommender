@@ -2,9 +2,10 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import { Book } from './database/data-provider'
 import { take, flatMap } from 'rxjs/operators'
-import { recommendBoook, getUsers, getUserRatings } from './controllers/recommend-controller'
+import { recommendItemFor, getUsers, getUserRatings } from './controllers/recommend-controller-helper'
+import { Book, UserRatings } from './database/books/book-db-entity';
+import { Movie, UserRatingsOnMovies } from './database/movies/movie-db-entity';
 
 const app = express();
 
@@ -22,35 +23,43 @@ app.listen(8000, () => {
   console.log('Server started!');
 });
 
-app.route('/api/cats').get((req, res) => {
-  res.send({
-    cats: [{ name: 'lilly3' }, { name: 'lucy3' }]
-  });
-});
 
-app.route('/api/cats/:name').get((req, res) => {
-  const requestedCatName = req.params['name'];
-  res.send({ name: requestedCatName });
-});
+app.route('/api/book/recommend/:userid').get(
+  (req, resp)=>{
+    recommendItemFor(Book, UserRatings, req, resp);
+  }
+);
 
-// app.route('/api/cats').post((req, res) => {
-//   res.send(201, req.body);
-// });
+app.route('/api/movie/recommend/:userid').get(
+  (req, resp)=>{
+    recommendItemFor(Movie, UserRatingsOnMovies, req, resp);
+  }
+);
 
-app.route('/api/recommend/:userid').get(recommendBoook);
+app.route('/api/book/user-ratings/:userid').get(
+   (req, resp) => {
+     getUserRatings(Book, UserRatings, req, resp);
+   }
+);
 
-app.route('/api/user-ratings/:userid').get(getUserRatings);
-app.route('/api/users').get(getUsers);
+app.route('/api/movie/user-ratings/:userid').get(
+  (req, resp) => {
+    getUserRatings(Movie, UserRatingsOnMovies, req, resp);
+  }
+);
 
-app.route('/api/books').get(async (req, res)=>{
-  let books:Book[] = [];
-	await Book.scanIds().pipe(take(50), flatMap((id:string)=>{
-		return Book.getBook(id);
-	})).forEach((book:Book)=>{
-    books.push(book);
-  });
+app.route('/api/book/users').get(
+  (req, resp) => {
+    getUsers(UserRatings, req, resp);
+  }
+);
 
-  res.send({books: books})
-})
+app.route('/api/movie/users').get(
+  (req, resp) => {
+    getUsers(UserRatingsOnMovies, req, resp);
+  }
+);
+
+
 
 

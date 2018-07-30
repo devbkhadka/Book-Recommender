@@ -14,7 +14,7 @@ export function simDistance(item1:RecommendationItem, item2:RecommendationItem):
 		await item1.getAttrs().pipe(flatMap((attr: ItemAttribute)=>{
 			return item2.getAttrValue(attr.name);
 		},
-		(attr1: ItemAttribute, val2:string, i1:number, i2:number)=>{
+		(attr1: ItemAttribute, val2:number, i1:number, i2:number)=>{
 			return [attr1, val2];
 		}
 		)).forEach(pair=>{

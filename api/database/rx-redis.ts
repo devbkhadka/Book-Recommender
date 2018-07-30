@@ -30,9 +30,6 @@ function observableFromStream(stream:any){
 }
 
 let pendingScanObservables = 0;
-// setInterval(()=>{
-// 	console.log(pendingScanObservables);
-// }, 1000)
 
 
 
@@ -334,7 +331,7 @@ export class RXRedis {
 		})
 		
 
-		return prom
+		return prom;
 	}
 
 	removeKey(dbkey:string){
