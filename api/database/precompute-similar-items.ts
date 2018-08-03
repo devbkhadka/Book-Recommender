@@ -10,11 +10,16 @@ import { RecommendationItem } from '../recommend/recommendation-helper';
 
 const RESUME_KEY = 'BR:RESUME_KEY'
 
-
+/**
+ * Pre-computes similarity between items which will save processing when recommending item to user.
+ * @param ItemRatingsClass Type used get all stored item ratings
+ * @param SimilarItemsClass Type used to save calculated similar items paried with an item
+ * @param getItemRatingsInstance function to get instance of item ratings for item with given id
+ */
 export async function PrecomputeSimilarItems (
 				ItemRatingsClass: typeof PersistentStringAndScoreCollection,
 				SimilarItemsClass: typeof PersistentStringAndScoreCollection,
-				getNewItemRatings: (id:string)=>RecommendationItem
+				getItemRatingsInstance: (id:string)=>RecommendationItem
 			){
 
 	let count = 0
@@ -28,8 +33,8 @@ export async function PrecomputeSimilarItems (
 
 	getAllIdCombinationsTaken2AtOnce(ItemRatingsClass, resumeIndex)
 	.forEach(async (pair:any)=>{
-		let item1 = getNewItemRatings(pair.bookId1)
-		let item2 = getNewItemRatings(pair.bookId2)
+		let item1 = getItemRatingsInstance(pair.bookId1)
+		let item2 = getItemRatingsInstance(pair.bookId2)
 		let score = await simDistance(item1, item2)
 
 		if(score>-2){

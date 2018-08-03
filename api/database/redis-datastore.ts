@@ -28,7 +28,9 @@ class RedisItemUtils {
      }
 }
 
-
+/** Implementation of PresistentObject using redis database
+ * 
+ */
 abstract class RedisItem extends PersistentObject {
     static _groupId:string;
 
@@ -54,7 +56,10 @@ abstract class RedisItem extends PersistentObject {
 }
 
 
-
+/** Used for storing string key value pair to redis database. Its subclass should shadow "_groupId"
+ * static field to store the strings in key with its own prefix.
+ * 
+ */
 export class RedisString {
     static _groupId = DB_STRING_GROUPID;
 
@@ -73,7 +78,10 @@ export class RedisString {
 }
 
 
-
+/** Class representing redis hash which can store string key value pairs. Its subclass must
+ * implement getItem static method which can use loadFromStorage instance method to fill the
+ * object from redis database
+ */
 export abstract class RedisHash extends RedisItem {
    
     loadFromStorage(): Promise<RedisHash> {
@@ -113,7 +121,9 @@ export abstract class RedisHash extends RedisItem {
 
 
 
-
+/**This class can be used to represent redis sorted set, which is set of items sorted by its score.
+ * 
+ */
 export abstract class RedisSortedSet extends PersistentStringAndScoreCollection {
     static _groupId: string;
 
@@ -169,6 +179,10 @@ export abstract class RedisSortedSet extends PersistentStringAndScoreCollection 
     
 }
 
+/**This class can be used to represent redis sorted set, which is set of items sorted by its score.
+ * In addition this class also store keys of all collection to anothe sorted set so that it can be easily
+ * iterated
+ */
 export abstract  class RedisSortedSetWithSavedKeys extends RedisSortedSet {
     static ALL_KEYS_ID = "AllKeys";
     static _groupId:string;

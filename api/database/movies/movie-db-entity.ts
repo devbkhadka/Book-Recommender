@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 
 export class Movie extends RedisHash {
 
-    static _groupId = 'Movies';
+    static _groupId:string = getGroupId('Movies');
 
     imdb_id: string|null = null;
     title:string|null=null;
@@ -34,7 +34,7 @@ export class Movie extends RedisHash {
 
 
 export class UserRatingsOnMovies extends RedisSortedSetWithSavedKeys implements RecommendationItem {
-    static _groupId:string = 'UserRatingsOnMovies';
+    static _groupId:string = getGroupId('UserRatingsOnMovies');
     get groupId(){
         return UserRatingsOnMovies._groupId;
     }
@@ -67,7 +67,7 @@ export class UserRatingsOnMovies extends RedisSortedSetWithSavedKeys implements 
 }
 
 export class MovieRatingsByUsers extends RedisSortedSetWithSavedKeys implements RecommendationItem {
-    static _groupId:string = 'MovieRatingsByUsers';
+    static _groupId:string = getGroupId('MovieRatingsByUsers');
     get groupId(){
         return MovieRatingsByUsers._groupId;
     }
@@ -98,7 +98,7 @@ export class MovieRatingsByUsers extends RedisSortedSetWithSavedKeys implements 
 
 
 export class SimilarMovies extends RedisSortedSet {
-    static _groupId:string = 'SimilarMovies';
+    static _groupId:string = getGroupId('SimilarMovies');
     get groupId(){
         return SimilarMovies._groupId;
     }
@@ -109,7 +109,7 @@ export class SimilarMovies extends RedisSortedSet {
 }
 
 export class MovieLinks extends RedisSortedSet {
-    static _groupId:string = 'MovieLinks';
+    static _groupId:string = getGroupId('MovieLinks');
 
     get groupId(){
         return MovieLinks._groupId;
@@ -118,6 +118,11 @@ export class MovieLinks extends RedisSortedSet {
     static getItem(id:string): Promise<MovieLinks>{
         return Promise.resolve(new this(id))
 	}
+}
+
+
+function getGroupId(groupName:string){
+    return `Movie:${groupName}`;
 }
 
 

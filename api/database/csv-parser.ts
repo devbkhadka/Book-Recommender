@@ -7,8 +7,11 @@ import { Writable } from 'stream';
 
 const transform = require( 'stream-transform');
 
-
-
+/** @returns csv parser function for file with the path with given csv-options. 
+ * Returned function can be called to get observalbe of row objects
+ *  @param path: path of csv file, please refer "csv-parse" npm module for csv-options. 
+ *  @param csv_options: csv options for parser 
+ */
 export function getParser(path:string, csv_options:any){
 
 	return ()=>{
@@ -23,7 +26,7 @@ export function getParser(path:string, csv_options:any){
 			var transformer = transform(function(record:any, callback:any){ 
 				if(!dispose) {
 					observer.next(record);
-					callback(null, record["Book-Title"] + "\n");	
+					callback(null, "");	
 				} 
 				else {
 					console.log("Disposing CSV stream !!");

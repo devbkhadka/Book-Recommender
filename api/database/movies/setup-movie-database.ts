@@ -7,6 +7,11 @@ import { getParser } from '../csv-parser';
 
 const csv_options = {columns: true, delimiter:',', escape:'"', quote:'"'};
 
+
+/**
+ * Setup database by filling it with movies, ratings grouped by user and book from data file. 
+ * Movie details will be filled using imdb api
+ */
 export class SetupMovieDatabase extends SetupDatabase {
     private static _instance: SetupMovieDatabase;
     
@@ -18,10 +23,6 @@ export class SetupMovieDatabase extends SetupDatabase {
     protected readonly RatingsForItemClass = MovieRatingsByUsers;
     protected readonly RatingsByUserClass =  UserRatingsOnMovies;
 
-    async setup() {
-        await super.setup();
-        
-    }
 
     protected getItemFromRow(row:any){
         let movie = new Movie(row['movieId']) 

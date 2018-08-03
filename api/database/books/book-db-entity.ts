@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 
 export class Book extends RedisHash {
 
-    static _groupId = 'Books';
+    static _groupId:string = getGroupId('Books');
 
     title:string|null=null;
 	author:string|null=null;
@@ -31,7 +31,7 @@ export class Book extends RedisHash {
 
 
 export class UserRatings extends RedisSortedSetWithSavedKeys implements RecommendationItem {
-    static _groupId:string = 'UserRatings';
+    static _groupId:string = getGroupId('UserRatings');
     get groupId(){
         return UserRatings._groupId;
     }
@@ -65,7 +65,7 @@ export class UserRatings extends RedisSortedSetWithSavedKeys implements Recommen
 }
 
 export class BookRatings extends RedisSortedSetWithSavedKeys implements RecommendationItem {
-    static _groupId:string = 'BookRatings';
+    static _groupId:string = getGroupId('BookRatings');
     get groupId(){
         return BookRatings._groupId;
     }
@@ -96,7 +96,7 @@ export class BookRatings extends RedisSortedSetWithSavedKeys implements Recommen
 
 
 export class SimilarBooks extends RedisSortedSet {
-    static _groupId:string = 'SimilarBooks';
+    static _groupId:string = getGroupId('SimilarBooks');
     get groupId(){
         return SimilarBooks._groupId;
     }
@@ -104,4 +104,9 @@ export class SimilarBooks extends RedisSortedSet {
     static getItem(id:string): Promise<SimilarBooks>{
 		return Promise.resolve(new this(id))
 	}
+}
+
+
+function getGroupId(groupName:string){
+    return `Book:${groupName}`;
 }

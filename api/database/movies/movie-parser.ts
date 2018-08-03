@@ -101,15 +101,21 @@ export function getMovieParser(linksParser: ()=>Observable<any>) {
 function fetchMovieDetail(id: string, imdbId:string){
     return Fetch (MOVIE_API_URL, {
         method: 'post',
-        body: `key=uI45TQuk2XHQDW6vKcVcfDijupfNFN&id=tt${imdbId}&type=json`,
+        body: `key=<put you key from imdbapi.net here>&id=tt${imdbId}&type=json`,
         headers: {
             'content-type': 'application/x-www-form-urlencoded'
         }
     }).then(resp=>resp.json())
     .then(
         val=>{
-            val['movieId'] = id;
-            return val;
+            if(val.status=='true'){
+                val['movieId'] = id;
+                return val;
+            }
+            else {
+                throw val.message;
+            }
+            
         }
     )
 }

@@ -1,8 +1,7 @@
-import { UserRatings, Book } from '../database/books/book-db-entity'
 import { getRecommendationsFor, ItemAttribute, RecommendationItem } from '../recommend/recommendation-helper'
 import { Request, Response } from 'express'
 import { from} from 'rxjs'
-import { flatMap, toArray, take } from 'rxjs/operators'
+import { flatMap, toArray, take, filter } from 'rxjs/operators'
 import { PersistentObject, PersistentStringAndScoreCollection } from '../database/datastore-protocols';
 
 
@@ -19,7 +18,7 @@ export async function recommendItemFor(ItemClass: typeof PersistentObject,
 		return from(items).pipe(take(50), flatMap((item:ItemAttribute)=>{
 			return ItemClass.getItem(item.name)
 		},
-		(rating, item:any, x, y)=>{
+		(rating, item:any)=>{
 			item['score'] = rating.value;
 			return item;
 		}
@@ -61,14 +60,23 @@ export async function getUserRatings(
 	let userId = req.param('userid');
 	let ratings: RecommendationItem = await UserRatingsClass.getItem(userId) as any;
 
-	let result = await ratings.getAttrs().pipe(take(30), flatMap((attr:ItemAttribute)=>{
-		return ItemClass.getItem(attr.name);
-	},
-	(rating, item:any, x, y)=>{
-		item['score'] = rating.value;
-		return item;
-	}), 
-	toArray()
+	let result = await ratings.getAttrs().pipe(
+		take(30), 
+		flatMap(
+			(attr:ItemAttribute)=>{
+				return ItemClass.getItem(attr.name);
+			},
+			(rating, item)=>{
+				(item as any) ['score'] = rating.value;
+				return item;
+			}
+		),
+		filter(
+			(val:any)=>{
+				return !!val.title;
+			}
+		),
+		toArray()
 	).toPromise()
 
 	resp.send(result);

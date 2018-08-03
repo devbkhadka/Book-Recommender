@@ -125,10 +125,11 @@ function observableFromStream(stream:any){
     return rows$.pipe(flatMap((row: any)=>row));
 }
 
-/**  Create observable which streams out data by recurssively calling a given function. 
- * Observable streams Tuples of expected data and a callback function which can be used control recurssion call
+/**  Create observable which streams data by recurssively calling a given function. 
+ * Observable streams Tuples of expected data and a callback function which can be used to control recurssion call
  * @param method method to be called recurssively. The method must call observers next method with 
- * Tuples of expected value and a callback function which will do the recurssion call.
+ * Tuples of expected value and a callback function "[any, (shouldSend:boolean)=>void]"" which will do the recurssion call.
+ * @param params: paramaters that will be passed to method when callin the method
  * @returns Observable of tuples of value and callback function which need to be called by observer 
  * when it is ready to receive anther batch of data
  * 
